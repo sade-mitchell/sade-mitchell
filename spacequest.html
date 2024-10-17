@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Exploration Quest</title>
+    <style>
+        body {
+            font-family: Futura, Sans-Serif;
+            text-align: center;
+            background-color: black; 
+            color: white;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+
+        .planet-btn {
+            margin: 10px;
+            padding: 15px 25px;
+            font-size: 18px;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .planet-btn:hover {
+            background-color: #b950b9;
+        }
+
+        img {
+            max-width: 300px;
+            height: auto;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="galaxy">
+        <h1>You've just landed in space! Where do you want to go?</h1>
+        <button class="planet-btn" onclick="showPlanet('moon')">The Moon</button>
+        <button class="planet-btn" onclick="showPlanet('saturn')">Saturn</button>
+        <button class="planet-btn" onclick="showPlanet('jupiter')">Jupiter</button>
+        <button class="planet-btn" onclick="showPlanet('mars')">Mars</button>
+        <button class="planet-btn" onclick="showPlanet('neptune')">Neptune</button>
+        <button class="planet-btn" onclick="showPlanet('mercury')">Mercury</button>
+        <button class="planet-btn" onclick="showPlanet('uranus')">Uranus</button>
+        <button class="planet-btn" onclick="showPlanet('venus')">Venus</button>
+    </div>
+
+    <div id="planet-info" style="display:none;">
+        <h1 id="planet-name"></h1>
+        <img id="planet-image" src="" alt="Planet Image">
+        <ul id="planet-facts"></ul>
+        <button class="back-btn" onclick="goBack()">Go Back</button>
+    </div>
+
+    <script>
+        // Data for each planet: image and facts
+        const planets = {
+            moon: {
+                name: "The Moon",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/xXp45gLeBTBt4jPuZcawUJ-1200-80.jpg",  // Replace with the actual path to your moon image
+                facts: [
+                    "The Moon is Earth's only natural satellite.",
+                    "Its gravitational pull causes tides on Earth.",
+                    "The Moon is about 384,400 km away from Earth."
+                ]
+            },f
+            saturn: {
+                name: "Saturn",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/Saturn_during_Equinox.jpg",  // Replace with the actual path to your Saturn image
+                facts: [
+                    "Saturn is the second largest planet in the solar system.",
+                    "It has rings made of ice and rock.",
+                    "Saturn has 82 moons, including Titan."
+                ]
+            },
+            jupiter: {
+                name: "Jupiter",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/jupiter.jpg",  // Replace with the actual path to your Jupiter image
+                facts: [
+                    "Jupiter is the largest planet in the solar system.",
+                    "It has a giant storm called the Great Red Spot.",
+                    "Jupiter has 79 moons, including Ganymede."
+                ]
+            },
+            mars: {
+                name: "Mars",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/OSIRIS_Mars_true_color.jpg",  // Replace with the actual path to your Mars image
+                facts: [
+                    "Mars is known as the Red Planet due to iron oxide on its surface.",
+                    "It has the largest volcano in the solar system, Olympus Mons.",
+                    "Mars has two small moons: Phobos and Deimos."
+                ]
+            },
+            mercury: {
+                name: "Mercury",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/fjbeeRiPRQjQNhizwy7cWX.jpg", 
+                facts: [
+                    "Mercury is the smallest planet in the solar system.",
+                    "It has the shortest orbit around the Sun, taking only 88 days.",
+                    "Mercury has almost no atmosphere to retain heat."
+                ]
+            },
+            venus: {
+                name: "Venus",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/Venus-jpeg.webp", 
+                facts: [
+                    "Venus is the hottest planet in the solar system.",
+                    "It rotates in the opposite direction to most planets.",
+                    "A day on Venus is longer than its year."
+                ]
+            },
+            neptune: {
+                name: "Neptune",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/pia01492-neptune-full-disk-16x9-1.webp",  
+                facts: [
+                    "Neptune is the farthest planet from the Sun.",
+                    "It has the strongest winds in the solar system.",
+                    "Neptune has 14 moons, the largest is Triton."
+                ]
+            },
+            uranus: {
+                name: "Uranus",
+                image: "https://assets.onecompiler.app/42vd6gr2w/42vd695xa/uranus.webp",  
+                facts: [
+                    "Uranus rotates on its side, making it unique in the solar system.",
+                    "It has a faint set of rings around it.",
+                    "Uranus has 27 known moons, named after characters from Shakespeare and Alexander Pope."
+                ]
+            }
+        };
+
+        // Function to display the planet's details
+        function showPlanet(planet) {
+            const planetData = planets[planet];
+            document.getElementById("planet-name").textContent = planetData.name;
+            document.getElementById("planet-image").src = planetData.image;
+            const factsList = document.getElementById("planet-facts");
+            factsList.innerHTML = "";  // Clear previous facts
+            planetData.facts.forEach(fact => {
+                const li = document.createElement("li");
+                li.textContent = fact;
+                factsList.appendChild(li);
+            });
+
+            document.getElementById("galaxy").style.display = "none";
+            document.getElementById("planet-info").style.display = "block";
+        }
+
+        // Function to go back to the main screen
+        function goBack() {
+            document.getElementById("galaxy").style.display = "block";
+            document.getElementById("planet-info").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
+
+
